@@ -10,8 +10,12 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.0",
+    "colors": "^1.4.0",
     "commander": "^4.0.1",
-    "form-data": "^3.0.0"
+    "form-data": "^3.0.0",
+    "fs-extra": "^8.1.0",
+    "inquirer": "^7.0.2",
+    "ncp": "^2.0.0"
   },
   "bin": {
     "knowq": "./index.js"

@@ -6,15 +6,10 @@ const axios = require('axios');
 const program = require('commander');
 var FormData = require('form-data');
 
+const commands = require('./commands');
+
 const working_dir = process.cwd();
 const config_path = path.join(working_dir, "knowq.config");
-if (!fs.existsSync(config_path)) {
-  console.log("Not a KnowQueue-initialized directory.");
-  console.log("Run \"knowq init\" to initialize this directory.");
-  process.exit(1);
-}
-
-let config = JSON.parse(fs.readFileSync(config_path));
 
 function walk(dir) {
   return new Promise((resolve, reject) => {
@@ -52,13 +47,21 @@ program
   .command('init')
   .description('initialize a KnowQueue directory.')
   .action(() => {
-    console.log("init");
+    commands.init();
   })
 
 program
   .command('deploy')
   .description('deploy to a running KnowQueue server.')
   .action(() => {
+    if (!fs.existsSync(config_path)) {
+      console.log("Not a KnowQueue-initialized directory.");
+      console.log("Run \"knowq init\" to initialize this directory.");
+      process.exit(1);
+    }
+    
+    let config = JSON.parse(fs.readFileSync(config_path));
+    
     let kb_path = path.isAbsolute(config.KB_MODEL) ? config.KB_MODEL : path.join(working_dir, config.KB_MODEL);
     walk(kb_path)
     .then(files => {

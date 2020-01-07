@@ -1,0 +1,11 @@
+version: '3'
+services:
+  knowq:
+    image: knowq/kernel
+    restart: always
+    ports:
+    - "5000:5000"
+    volumes:
+    - kbs:/app/knowledgebase
+volumes:
+  kbs:
